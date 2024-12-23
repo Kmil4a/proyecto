@@ -91,6 +91,7 @@ const TableReservas = ({ reservas, getData }) => {
                 day: "numeric",
                 month: "long",
                 year: "numeric",
+                timeZone: "UTC",
               })}
             </td>
             <td>{reserva.confirmed ? "Sí" : "No"}</td>

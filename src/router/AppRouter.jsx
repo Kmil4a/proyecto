@@ -7,7 +7,7 @@ import AuthPage from "../pages/AuthPage";
 const AppRouter = () => {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<AuthPage />} />
       <Route path="/salas" element={<SalasPage />} />
       <Route path="/reservas" element={<ReservasPage />} />
       <Route path="/auth" element={<AuthPage />} />

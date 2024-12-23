@@ -116,6 +116,7 @@ const AuthPage = () => {
               </NavLink>
             </NavItem>
           </Nav>
+          <h2 style={{textAlign:"center", margin:"1rem 0"}}>Reserva de Salas de Estudio</h2>
           <TabContent activeTab={activeTab} className="mt-4">
             <TabPane tabId="login">
               <Form onSubmit={handleLogin}>

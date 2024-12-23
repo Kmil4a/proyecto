@@ -7,6 +7,7 @@ import ModalReserva from "../components/ModalReserva";
 import Navbar from "../components/Navbar";
 import Spinner from "../components/Spinner";
 import api from "../axiosConfig";
+import { useNavigate } from "react-router-dom";
 
 const SalasPage = () => {
   const [salas, setSalas] = useState([]);
@@ -15,8 +16,15 @@ const SalasPage = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [salaSelected, setSalaSelected] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    //verificar exista un access_token en el localstorage
+    if (!localStorage.getItem("access_token")) {
+      navigate("/");
+    }
+
     fetchSalas();
   }, []);
 
@@ -31,7 +39,10 @@ const SalasPage = () => {
       },
     });
     const data = response.data;
-    setSalas(data);
+    console.log(data);
+    setSalas(data.rooms);
+    setIsAdmin(data.user.is_superuser);
+
     setIsLoading(false);
   };
 
@@ -52,20 +63,34 @@ const SalasPage = () => {
     toggleReserva();
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    navigate("/");
+  };
+
   return (
     <div className="page_container">
-      <h1 id="titulo">Reserva de Salas</h1>
-      <Navbar />
-      <div>
-        <Button
-          id="boton-crearSala"
-          color="danger"
-          onClick={handleCreate}
-          className="button_crear_sala"
-        >
-          Crear nueva sala
+      <div className="header_page">
+        <h1 id="titulo">Reserva de Salas</h1>
+        <Button color="danger" onClick={handleLogout}>
+          Cerrar Sesión
         </Button>
       </div>
+
+      <Navbar />
+      {isAdmin && (
+        <div>
+          <Button
+            id="boton-crearSala"
+            color="danger"
+            onClick={handleCreate}
+            className="button_crear_sala"
+          >
+            Crear nueva sala
+          </Button>
+        </div>
+      )}
       {isLoading ? (
         <Spinner />
       ) : (

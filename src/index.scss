@@ -189,3 +189,10 @@ a {
     color: #000 !important;
   }
 }
+
+.header_page{
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row nowrap;
+  max-height: 3rem;
+}
